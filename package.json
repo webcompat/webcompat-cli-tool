@@ -1,0 +1,20 @@
+{
+  "name": "webcompat-cli-tool",
+  "version": "0.0.1",
+  "description": "Helper for setting up and running webcompat.com",
+  "main": "tool.js",
+  "dependencies": {
+    "conf": "^1.1.2",
+    "github-oauth-prompt": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "los": "node tool.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "zoepage",
+  "license": "MIT"
+}
