@@ -42,25 +42,28 @@ prompt.delimiter = ' ';
 
 // Valid Property Settings Overview: https://www.npmjs.com/package/prompt#valid-property-settings
 // define schema for prompt inputs
-var username = {
-	name: 			'username',
-	description: 	'Please enter your GitHub username',
-	type: 			'string',
-	required: 		true 
-}
 
-var password = {
-	name: 			'password',
- 	description: 	'Please enter your GitHub password', 
-    type: 			'string', 
-    hidden: 		true,
-    replace: 		'*',
-    required: 		true        
-}
+var schema = {
+ 	username: {
+		name: 			'username',
+		description: 	'Please enter your GitHub username',
+		type: 			'string',
+		required: 		true 
+	},
 
-var num = {
-	name: 'num',
-	description: 'Step 1, 2 or 3'
+	password: {
+		name: 			'password',
+	 	description: 	'Please enter your GitHub password', 
+	    type: 			'string', 
+	    hidden: 		true,
+	    replace: 		'*',
+	    required: 		true        
+	},
+
+	step: {
+		name: 			'step',
+		description: 	'Step 1, 2 or 3'
+	}
 }
 
 
@@ -75,14 +78,14 @@ var step3 = require('./lib/step3');
 
 prompt.start();
 
-prompt.get([num], function (err, result) {	
+prompt.get(schema.step, function (err, result) {	
 	console.log(result)
 
-	switch (result.num) {
+	switch (result.step) {
 	  	case '1':
 	  		console.log('Step 1');
-	    	prompt.get([username, password], function(err, res){
-	    	var key = step1.generateOAuthKey(result.username, result.password);
+	    	prompt.get([schema.username, schema.password], function(err, res){
+	    	var key = step1.generateOAuthKey(res.username, res.password);
 	    	config.set('OAUTH_TOKEN', key);
 			console.log('Your generated oAuth key is: ', key.white)
 	    });
