@@ -6,5 +6,5 @@ Proof of concept for an init tool for the config of webcompat.com
 
 ```
 npm i
-node tool.js
+npm start
 ```
