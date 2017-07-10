@@ -4,12 +4,14 @@
   "description": "Helper for setting up and running webcompat.com",
   "main": "tool.js",
   "dependencies": {
+    "colors": "^1.1.2",
     "conf": "^1.1.2",
-    "github-oauth-prompt": "^1.1.0"
+    "github": "^9.2.0",
+    "prompt": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "los": "node tool.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
