@@ -62,7 +62,8 @@ var schema = {
 
 	step: {
 		name: 			'step',
-		description: 	'Step 1, 2 or 3'
+		description: 	'Step 1, 2 or 3',
+		type: 			'integer'
 	}
 }
 
@@ -82,7 +83,7 @@ prompt.get(schema.step, function (err, result) {
 	console.log(result)
 
 	switch (result.step) {
-	  	case '1':
+	  	case 1:
 	  		console.log('Step 1');
 	    	prompt.get([schema.username, schema.password], function(err, res){
 	    	var key = step1.generateOAuthKey(res.username, res.password);
@@ -91,11 +92,11 @@ prompt.get(schema.step, function (err, result) {
 	    });
 	    break;
 
-	  	case '2':
+	  	case 2:
 	    	console.log('Step 2');
 	    break;
 
-	    case '3':
+	    case 3:
 	    	console.log('Step 3');
 	    break;
 

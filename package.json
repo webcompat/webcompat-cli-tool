@@ -1,9 +1,10 @@
 {
   "name": "webcompat-cli-tool",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Helper for getting webcompat.com up and running",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "colors": "^1.1.2",
     "conf": "^1.1.2",
     "github": "^9.2.0",
