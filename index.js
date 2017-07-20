@@ -105,7 +105,11 @@ var messages = {
 	step1 : `  
 	Please generate your personal access token. If you are not sure how its done, 
 	here is a handy explanation: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/. 
-	After you've done that, please come back and paste it here. So I can save it for you and finish your first step of the setup.\n`
+	After you've done that, please come back and paste it here. So I can save it for you and finish your first step of the setup.\n`,
+	step2 : `
+	Please add your test repository for the filed bugs. If you are part of the webcompat project, you can also use the repository there.\n`,
+	step3 : `
+	We need to add your credentials and where to upload the images. Do you want to add something specific or just go with the default?\n`
 }
 
 
@@ -125,7 +129,7 @@ console.log(messages.welcome);
 prompt.get(schema.step, function (err, result) {	
 	switch (result.step) {
 	  	case 1:
-	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.bold.cyan + messages.step1.cyan);
+	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.step1.cyan);
 	    	prompt.get([schema.oAuthKey], function(err, res){
 	    	if(res && res.oauthkey.length != 40){
 	    		console.log('Looks like something went wrong with pasting your personal access token. Wanna try again?'.red)
@@ -139,11 +143,11 @@ prompt.get(schema.step, function (err, result) {
 	    break;
 
 	  	case 2:
-	    	console.log('Step 2');
+	    	console.log('\n 	Step 2 - Setting up way of reading / sending dynamic content (bug reports, labels). \n'.magenta.inverse + messages.step2.magenta);
 	    break;
 
 	    case 3:
-	    	console.log('Step 3');
+	    	console.log('\n 	Step 3 - Setting up image upload and database. \n'.yellow.inverse + messages.step3.yellow);
 	    break;
 
 	  	default:
