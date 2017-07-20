@@ -44,27 +44,68 @@ prompt.delimiter = ' ';
 // define schema for prompt inputs
 
 var schema = {
- 	username: {
-		name: 			'username',
-		description: 	'Please enter your GitHub username',
+ 	oAuthKey: {
+		name: 			'oauthkey',
+		description: 	'Please paste here your Github oAuthKey',
 		type: 			'string',
 		required: 		true 
 	},
 
-	password: {
-		name: 			'password',
-	 	description: 	'Please enter your GitHub password', 
-	    type: 			'string', 
-	    hidden: 		true,
-	    replace: 		'*',
-	    required: 		true        
-	},
-
 	step: {
 		name: 			'step',
-		description: 	'Step 1, 2 or 3',
+		description: 	'Please type 1, 2 or 3',
 		type: 			'integer'
 	}
+}
+
+var messages = {
+	welcome : `	************************************************************************************************
+	*                                                                                              *
+	*                                                                   ,,,,,,         ,,,,,       *
+	*                                                                  ,,,,,,         ,,,,,        *
+	*                                                                ,????,,+++ +++++,,???,,       *
+	*                                                                ,????+++++ +++++++???,,       *
+	*                                                                ,,,+++++++ +++++++++,,,       *
+	*                                                                +++++++,,, ,,,+++++++++       *
+	*                                                                +++,,,,,,, ,,,,,+++++++       *
+	*                                                                +,,,,,,,,, ,,,,,,,,,+++       *
+	*                                                                +,,,,,,,,, ,,,,,,,,,+++       *
+	*                                                                +,,    ,,, ,,,    ,,+++       *          
+	*             Welcome to the WEBCOMPAT.COM                       +,,    ,,, ,,,    ,,+++       *
+	*                   project setup.                               +,,,,,,,,   ,,,,,,+++         *
+	*                                                                 ++,,,,,,, ,,,,,++++          *
+	*                                                                   +++++++ +++++++++          *
+	*              I'm your friendly wompat!                              ,,+++ +++++,,,,          *
+	*                                                                     ,,+++ +++++,,,,          *
+	*                                                                   ,,,,+++ +????,,,,,         *
+	*                                                                   ,,,,+++ ?????,,,,,         *
+	*                                                                     ,,,,, ???,,,,,,          *
+	*                                                                       ,,, ,,,,,,,            *
+	*                                                                       ,,,    ,,,,            *
+	*                                                                                              *
+	************************************************************************************************
+	*  Thank you for your help! Let´s set up webcompat.com in a local enviroment.                  *
+	*                                                                                              *
+	*  We have three different setps to setup the project. You do not need to finish all 3 steps,  *
+	*  but you'd need to stay in order. So, please complete e.g. step 1 before step 2.             *
+	*  Otherwise the project will not start and exit with errors.                                  *
+	*                                                                                              *
+	************************************************************************************************
+	*                                                                                              *
+	*    Step 1 - Setting up static files + access to repository                                   *
+	*    Step 2 - Setting up way of reading / sending dynamic content (bug reports, labels)        *
+	*    Step 3 - Setting up image upload and database                                             *
+	*                                                                                              *
+	************************************************************************************************
+	
+	
+	> With which setup step can I help you with?
+	
+	`,
+	step1 : `  
+	Please generate your personal access token. If you are not sure how its done, 
+	here is a handy explanation: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/. 
+	After you've done that, please come back and paste it here. So I can save it for you and finish your first step of the setup.\n`
 }
 
 
@@ -79,16 +120,21 @@ var step3 = require('./lib/step3');
 
 prompt.start();
 
-prompt.get(schema.step, function (err, result) {	
-	console.log(result)
+console.log(messages.welcome);
 
+prompt.get(schema.step, function (err, result) {	
 	switch (result.step) {
 	  	case 1:
-	  		console.log('Step 1');
-	    	prompt.get([schema.username, schema.password], function(err, res){
-	    	var key = step1.generateOAuthKey(res.username, res.password);
-	    	config.set('OAUTH_TOKEN', key);
-			console.log('Your generated oAuth key is: ', key.white)
+	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.bold.cyan + messages.step1.cyan);
+	    	prompt.get([schema.oAuthKey], function(err, res){
+	    	if(res && res.oauthkey.length != 40){
+	    		console.log('Looks like something went wrong with pasting your personal access token. Wanna try again?'.red)
+	    	} else if(res && res.oauthkey.length == 40) {
+	    		config.set('OAUTH_TOKEN', res);
+	    		console.log('Thank you! Your personal access token has been saved in the secret.json!'.yellow);
+	    	} else {
+				console.log('An error occoured. Please try again.');
+	    	}
 	    });
 	    break;
 
