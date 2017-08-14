@@ -112,7 +112,7 @@ var messages = {
 	************************************************************************************************
 	*                                                                                              *
 	*    Step 1 - Setting up static files + access to repository                                   *
-	*    Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels)        *
+	*    Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels)    *
 	*    Step 3 - Setting up image upload and database                                             *
 	*                                                                                              *
 	************************************************************************************************
@@ -140,11 +140,11 @@ var messages = {
 	If you don't have a repo by yourself or are not sure what this means, just hit enter and use the default.
 
 	The second and third values are your application tokens. How to get them? 
+	Open the link below in the browser of your choice and fill out the form.
 	👉  https://github.com/settings/applications/new 👈. 
 
-	Open the link below in the browser of your choice and fill out the form.
-	☝️  The homepage URL is http://localhost:5000/.
-	☝️  The Authorization callback URL http://localhost:5000/callback.
+	The homepage URL is http://localhost:5000/.
+	The Authorization callback URL http://localhost:5000/callback.
 
 	🌈  Please come back after you have generated them and paste them in the prompt. 🌈
 
