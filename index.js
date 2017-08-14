@@ -16,9 +16,9 @@ const defaultSchema = {
 	"GITHUB_CALLBACK_URL": "http://localhost:5000/callback",
 	"SECRET_KEY": "~*change me*~",
 	"HOOK_SECRET_KEY": "~*change me*~",
-	"UPLOADS_DEFAULT_DEST": "",
-	"UPLOADS_DEFAULT_URL": "",
-	"BACKUP_DEFAULT_DEST": "./backups/"
+	"UPLOADS_DEFAULT_DEST": "/uploads/",
+    "UPLOADS_DEFAULT_URL": "http://localhost:5000/uploads/",
+	"BACKUP_DEFAULT_DEST": "/backups/"
 }
 
 // define config file + settings
@@ -152,7 +152,7 @@ var messages = {
 	\n`,
 	
 	step3 : `
-	We need to add your credentials and where to upload the images. Do you want to add something specific or just go with the default?\n`
+	We just added the paths to your backup as well as image upload automatically. You are done!\n`
 }
 
 
@@ -210,7 +210,13 @@ prompt.get(schema.step, function (err, result) {
 	    break;
 
 	    case 3:
-	    	console.log('\n 	Step 3 - Setting up image upload and database. \n'.yellow.inverse + messages.step3.yellow);
+	    	console.log('\n 	Step 3 - Setting up image upload and database.'.yellow.inverse);
+	    	
+	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/");
+	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/");
+
+	    	console.log(messages.step3.green.inverse)
+
 	    break;
 
 	  	default:
