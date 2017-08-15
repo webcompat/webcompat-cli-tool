@@ -14,7 +14,7 @@ const defaultSchema = {
 	"GITHUB_CLIENT_ID": "",
 	"GITHUB_CLIENT_SECRET": "",
 	"GITHUB_CALLBACK_URL": "http://localhost:5000/callback",
-	"SECRET_KEY": "~*change me*~",
+	"SECRET_KEY": "SECRETS",
 	"HOOK_SECRET_KEY": "~*change me*~",
 	"UPLOADS_DEFAULT_DEST": "/uploads/",
     "UPLOADS_DEFAULT_URL": "http://localhost:5000/uploads/",
@@ -48,6 +48,8 @@ var schema = {
 		name: 			'oauthkey',
 		description: 	'Please paste here your GitHub oAuthKey',
 		type: 			'string',
+		hidden: 		true,
+		replace: 		'*',    
 		required: 		true 
 	},
 
@@ -60,13 +62,19 @@ var schema = {
 	clientId: {
 		name: 			'clientid',
 		description: 	'Please paste now your GitHub client ID',
-		type: 			'string'
+		type: 			'string',
+		hidden: 		true,
+		replace: 		'*',
+		required: 		true
 	},
 
 	clientSecret: 	{
 		name: 			'clientsecret',
 		description: 	'Please paste now your GitHub client secret',
-		type: 			'string'
+		type: 			'string',
+		hidden: 		true,
+		replace: 		'*',
+		required: 		true
 	},
 
 	step: {
@@ -212,8 +220,8 @@ prompt.get(schema.step, function (err, result) {
 	    case 3:
 	    	console.log('\n 	Step 3 - Setting up image upload and database.'.yellow.inverse);
 	    	
-	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/");
-	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/");
+	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/"); // @todo check, if path still works as NPM PKG
+	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/"); // @todo check, if path still works as NPM PKG
 
 	    	console.log(messages.step3.green.inverse)
 
