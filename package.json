@@ -7,11 +7,13 @@
     "bluebird": "^3.5.0",
     "colors": "^1.1.2",
     "conf": "^1.1.2",
-    "prompt": "^1.0.0"
+    "prompt": "^1.0.0",
+    "tetris": "^0.1.6"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "play" : "tetris"
   },
   "repository": {
     "type": "git",
