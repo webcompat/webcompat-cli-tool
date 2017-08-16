@@ -17,7 +17,7 @@ const defaultSchema = {
 	"SECRET_KEY": "SECRETS",
 	"HOOK_SECRET_KEY": "~*change me*~",
 	"UPLOADS_DEFAULT_DEST": "/uploads/",
-    "UPLOADS_DEFAULT_URL": "http://localhost:5000/uploads/",
+	"UPLOADS_DEFAULT_URL": "http://localhost:5000/uploads/",
 	"BACKUP_DEFAULT_DEST": "/backups/"
 }
 
@@ -55,7 +55,8 @@ var schema = {
 
 	issueRepo: {
 		name: 			'issuerepo',
-		description: 	'Please paste here your your GitHub issue repository (or hit ENTER for default)',
+		description: 	'Please paste here your GitHub issue repository (or hit ENTER for default)  👉 ',
+		default: 		'webcompat/webcompat-tests/issues',
 		type: 			'string'
 	},
 
@@ -130,9 +131,9 @@ var messages = {
 	
 	`,
 	step1 : `  
-	For the first step, we need 1 value, your personal access token or oAuth token.
+	For the first step, we need a personal access token or also called oAuth token. 
 
-	You need to generate your personal access token and paste it here, so it will be saved in your secret.json. If you are not sure how its done, 
+	You need to generate this token and paste it here, so it will be saved in your secret.json. If you are not sure how its done, 
 	here is a handy explanation: 
 
 	👉  https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/ 👈. 
@@ -200,8 +201,6 @@ prompt.get(schema.step, function (err, result) {
 	    		if (res){
 	    			if(res.issuerepo.length > 0) {
 	    				config.set('ISSUES_REPO_URI', res.issuerepo);
-	    			} else {
-						config.set('ISSUES_REPO_URI', 'webcompat/webcompat-tests/issues');
 	    			}
 
 		    		if(res.clientid && res.clientsecret){
@@ -222,7 +221,7 @@ prompt.get(schema.step, function (err, result) {
 	    	
 	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/"); // @todo check, if path still works as NPM PKG
 	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/"); // @todo check, if path still works as NPM PKG
-
+	    	config.set('UPLOADS_DEFAULT_URL', 'http://localhost:5000/uploads/');
 	    	console.log(messages.step3.green.inverse)
 
 	    break;
