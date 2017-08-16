@@ -219,8 +219,8 @@ prompt.get(schema.step, function (err, result) {
 	    case 3:
 	    	console.log('\n 	Step 3 - Setting up image upload and database.'.yellow.inverse);
 	    	
-	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/"); // @todo check, if path still works as NPM PKG
-	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/"); // @todo check, if path still works as NPM PKG
+	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/");
+	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/");
 	    	config.set('UPLOADS_DEFAULT_URL', 'http://localhost:5000/uploads/');
 	    	console.log(messages.step3.green.inverse)
 
