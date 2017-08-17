@@ -40,61 +40,15 @@ var colors = require('colors'); // eslint-disable-line
 prompt.message = '>';
 prompt.delimiter = ' ';
 
-// Valid Property Settings Overview: https://www.npmjs.com/package/prompt#valid-property-settings
 // define schema for prompt inputs
-
-var schema = {
- 	oAuthKey: {
-		name: 			'oauthkey',
-		description: 	'Please paste here your GitHub oAuthKey',
-		type: 			'string',
-		hidden: 		true,
-		replace: 		'*',    
-		required: 		true 
-	},
-
-	issueRepo: {
-		name: 			'issuerepo',
-		description: 	'Please paste here your GitHub issue repository (or hit ENTER for default)  👉 ',
-		default: 		'webcompat/webcompat-tests/issues',
-		type: 			'string'
-	},
-
-	clientId: {
-		name: 			'clientid',
-		description: 	'Please paste now your GitHub client ID',
-		type: 			'string',
-		hidden: 		true,
-		replace: 		'*',
-		required: 		true
-	},
-
-	clientSecret: 	{
-		name: 			'clientsecret',
-		description: 	'Please paste now your GitHub client secret',
-		type: 			'string',
-		hidden: 		true,
-		replace: 		'*',
-		required: 		true
-	},
-
-	step: {
-		name: 			'step',
-		description: 	'Please type 1, 2 or 3',
-		type: 			'integer',
-		message:        'Please start again and select step 1, 2 or 3!' 
-	}
-}
-
-
-
+var schema = require('./lib/schema.js');
 
 
 //********************************************************//
-// importing all needed steps
+// importing all needed steps and messages / ASCII
 // running prompt + creating / overwriting secret.json
 //********************************************************//
-var messages  	= require('./messages.js');
+var messages  	= require('./lib/messages.js');
 // var step1 		= require('./lib/step1');
 // var step2 		= require('./lib/step2');
 // var step3 		= require('./lib/step3');
@@ -104,11 +58,11 @@ prompt.start();
 
 console.log(messages.text.welcome);
 
-prompt.get(schema.step, function (err, result) {	
+prompt.get(schema.settings.step, function (err, result) {	
 	switch (result.step) {
 	  	case 1:
 	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.text.step1.cyan);
-	    	prompt.get([schema.oAuthKey], function(err, res){
+	    	prompt.get([schema.settings.oAuthKey], function(err, res){
 		    	if (res && res.oauthkey.length !== 40){
 		    		console.log('\n Looks like something went wrong with pasting your personal access token. Wanna try again? \n'.red.inverse)
 		    	} else if(res && res.oauthkey.length === 40) {
@@ -123,7 +77,7 @@ prompt.get(schema.step, function (err, result) {
 	  	case 2:
 	    	console.log('\n 	Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels). \n'.magenta.inverse + messages.text.step2.magenta);
 	    	
-	    	prompt.get([schema.issueRepo, schema.clientId, schema.clientSecret], function(err, res){
+	    	prompt.get([schema.settings.issueRepo, schema.settings.clientId, schema.settings.clientSecret], function(err, res){
 	    		if (res){
 	    			if(res.issuerepo.length > 0) {
 	    				config.set('ISSUES_REPO_URI', res.issuerepo);
