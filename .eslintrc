@@ -1,6 +1,6 @@
 {
   "env": {
-    "browser": true
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -13,8 +13,8 @@
     "eqeqeq": [2, "smart"],
     "new-cap": 2,
     "no-cond-assign": 0,
+    "no-console": 0,
     "no-use-before-define": 2,
-    "one-var": [2, "never"],
-    "prettier/prettier": "error"
+    "one-var": [2, "never"]
   }
 }

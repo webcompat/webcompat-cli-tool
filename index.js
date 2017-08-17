@@ -5,10 +5,10 @@
 //********************************************************//
 
 // read / write config.json to secret.json
-const Conf = require('conf');
+var Conf = require('conf');
 
 // default schema for config
-const defaultSchema = {
+var defaultSchema = {
 	"OAUTH_TOKEN": "",
 	"ISSUES_REPO_URI": "",
 	"GITHUB_CLIENT_ID": "",
@@ -22,7 +22,7 @@ const defaultSchema = {
 }
 
 // define config file + settings
-const config = new Conf({
+var config = new Conf({
 	configName: "secret",
 	defaults: defaultSchema,
 	cwd: './'
@@ -34,7 +34,7 @@ const config = new Conf({
 
 // prompting info and getting input with color fun
 var prompt = require('prompt');
-var colors = require('colors');
+var colors = require('colors'); // eslint-disable-line
 
 // changing config values for prompt
 prompt.message = '>';
@@ -86,106 +86,32 @@ var schema = {
 	}
 }
 
-var messages = {
-	welcome : `	************************************************************************************************
-	*                                                                                              *
-	*                                                                   ,,,,,,         ,,,,,       *
-	*                                                                  ,,,,,,         ,,,,,        *
-	*                                                                ,????,,+++ +++++,,???,,       *
-	*                                                                ,????+++++ +++++++???,,       *
-	*                                                                ,,,+++++++ +++++++++,,,       *
-	*                                                                +++++++,,, ,,,+++++++++       *
-	*                                                                +++,,,,,,, ,,,,,+++++++       *
-	*                                                                +,,,,,,,,, ,,,,,,,,,+++       *
-	*                                                                +,,,,,,,,, ,,,,,,,,,+++       *
-	*                                                                +,,    ,,, ,,,    ,,+++       *          
-	*             Welcome to the WEBCOMPAT.COM                       +,,    ,,, ,,,    ,,+++       *
-	*                   project setup.                               +,,,,,,,,   ,,,,,,+++         *
-	*                                                                 ++,,,,,,, ,,,,,++++          *
-	*                                                                   +++++++ +++++++++          *
-	*              I'm your friendly wompat!                              ,,+++ +++++,,,,          *
-	*                                                                     ,,+++ +++++,,,,          *
-	*                                                                   ,,,,+++ +????,,,,,         *
-	*                                                                   ,,,,+++ ?????,,,,,         *
-	*                                                                     ,,,,, ???,,,,,,          *
-	*                                                                       ,,, ,,,,,,,            *
-	*                                                                       ,,,    ,,,,            *
-	*                                                                                              *
-	************************************************************************************************
-	*  Thank you for your help! Let´s set up webcompat.com in a local enviroment.                  *
-	*                                                                                              *
-	*  We have three different setps to setup the project. You do not need to finish all 3 steps,  *
-	*  but you'd need to stay in order. So, please complete e.g. step 1 before step 2.             *
-	*  Otherwise the project will not start and exit with errors.                                  *
-	*                                                                                              *
-	************************************************************************************************
-	*                                                                                              *
-	*    Step 1 - Setting up static files + access to repository                                   *
-	*    Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels)    *
-	*    Step 3 - Setting up image upload and database                                             *
-	*                                                                                              *
-	************************************************************************************************
-	
-	
-	> With which setup step can I help you with?
-	
-	`,
-	step1 : `  
-	For the first step, we need a personal access token or also called oAuth token. 
-
-	You need to generate this token and paste it here, so it will be saved in your secret.json. If you are not sure how its done, 
-	here is a handy explanation: 
-
-	👉  https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/ 👈. 
-
-	🌈  Please come back after you have generated them and paste them in the prompt. 🌈
 
 
-	\n`,
-	
-	step2 : `
-	For the next step, we need 3 values.
-	The first value is the URL to the repository, where the app can find the filed issues. 
-	If you don't have a repo by yourself or are not sure what this means, just hit enter and use the default.
-
-	The second and third values are your application tokens. How to get them? 
-	Open the link below in the browser of your choice and fill out the form.
-	👉  https://github.com/settings/applications/new 👈. 
-
-	The homepage URL is http://localhost:5000/.
-	The Authorization callback URL http://localhost:5000/callback.
-
-	🌈  Please come back after you have generated them and paste them in the prompt. 🌈
-
-
-	\n`,
-	
-	step3 : `
-	We just added the paths to your backup as well as image upload automatically. You are done!\n`
-}
 
 
 //********************************************************//
 // importing all needed steps
 // running prompt + creating / overwriting secret.json
 //********************************************************//
-var step1 = require('./lib/step1');
-var step2 = require('./lib/step2');
-var step3 = require('./lib/step3');
+var messages  	= require('./messages.js');
+// var step1 		= require('./lib/step1');
+// var step2 		= require('./lib/step2');
+// var step3 		= require('./lib/step3');
 
 
 prompt.start();
 
-console.log(messages.welcome);
+console.log(messages.text.welcome);
 
 prompt.get(schema.step, function (err, result) {	
 	switch (result.step) {
 	  	case 1:
-	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.step1.cyan);
+	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.text.step1.cyan);
 	    	prompt.get([schema.oAuthKey], function(err, res){
-		    	if (res && res.oauthkey.length != 40){
+		    	if (res && res.oauthkey.length !== 40){
 		    		console.log('\n Looks like something went wrong with pasting your personal access token. Wanna try again? \n'.red.inverse)
-		    	} else if(res && res.oauthkey.length == 40) {
+		    	} else if(res && res.oauthkey.length === 40) {
 		    		config.set('OAUTH_TOKEN', res.oauthkey);
 		    		console.log('\n Thank you! Your personal access token has been saved in the secret.json! \n'.green.inverse);
 		    	} else {
@@ -195,7 +121,7 @@ prompt.get(schema.step, function (err, result) {
 	    break;
 
 	  	case 2:
-	    	console.log('\n 	Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels). \n'.magenta.inverse + messages.step2.magenta);
+	    	console.log('\n 	Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels). \n'.magenta.inverse + messages.text.step2.magenta);
 	    	
 	    	prompt.get([schema.issueRepo, schema.clientId, schema.clientSecret], function(err, res){
 	    		if (res){
@@ -222,7 +148,7 @@ prompt.get(schema.step, function (err, result) {
 	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/");
 	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/");
 	    	config.set('UPLOADS_DEFAULT_URL', 'http://localhost:5000/uploads/');
-	    	console.log(messages.step3.green.inverse)
+	    	console.log(messages.text.step3.green.inverse)
 
 	    break;
 

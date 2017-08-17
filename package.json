@@ -10,10 +10,13 @@
     "prompt": "^1.0.0",
     "tetris": "^0.1.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^4.4.1"
+  },
   "scripts": {
+    "lint": "eslint index.js /lib",
     "start": "node index.js",
-    "play" : "tetris"
+    "play": "tetris"
   },
   "repository": {
     "type": "git",
