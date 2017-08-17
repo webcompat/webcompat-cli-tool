@@ -14,7 +14,7 @@
     "eslint": "^4.4.1"
   },
   "scripts": {
-    "lint": "eslint index.js /lib",
+    "lint": "eslint index.js ./lib/step*.js",
     "start": "node index.js",
     "play": "tetris"
   },
