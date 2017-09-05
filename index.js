@@ -61,7 +61,7 @@ console.log(messages.text.welcome);
 prompt.get(schema.settings.step, function (err, result) {	
 	switch (result.step) {
 	  	case 1:
-	  		console.log('\n 	Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.text.step1.cyan);
+	  		console.log('\n Step 1 - Setting up static files + access to repository. \n'.cyan.inverse + messages.text.step1.cyan);
 	    	prompt.get([schema.settings.oAuthKey], function(err, res){
 		    	if (res && res.oauthkey.length !== 40){
 		    		console.log('\n Looks like something went wrong with pasting your personal access token. Wanna try again? \n'.red.inverse)
@@ -75,7 +75,7 @@ prompt.get(schema.settings.step, function (err, result) {
 	    break;
 
 	  	case 2:
-	    	console.log('\n 	Step 2 - Setting up the way of reading / sending dynamic content (bug reports, labels). \n'.magenta.inverse + messages.text.step2.magenta);
+	    	console.log('\n Step 2 - Setting up the way of reading / sending dynamic content. \n'.magenta.inverse + messages.text.step2.magenta);
 	    	
 	    	prompt.get([schema.settings.issueRepo, schema.settings.clientId, schema.settings.clientSecret], function(err, res){
 	    		if (res){
@@ -97,7 +97,7 @@ prompt.get(schema.settings.step, function (err, result) {
 	    break;
 
 	    case 3:
-	    	console.log('\n 	Step 3 - Setting up image upload and database.'.yellow.inverse);
+	    	console.log('\n Step 3 - Setting up image upload and database.'.yellow.inverse);
 	    	
 	    	config.set('UPLOADS_DEFAULT_DEST', process.cwd() + "/uploads/");
 	    	config.set('BACKUP_DEFAULT_DEST', process.cwd() + "/backups/");
